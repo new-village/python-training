@@ -1,6 +1,7 @@
 """ list08.py
-マンデルブロー集合を計算するスクリプト（悲マルチプロセス）
+マンデルブロー集合を計算するスクリプト（非マルチプロセス）
 """
+import time
 import numpy as np
 import matplotlib
 
@@ -59,8 +60,14 @@ def create_jpg(mandelbrot_data):
     plt.close()
 
 def main():
+    # 開始時間の記録
+    start = time.perf_counter()
+    # マンデルブロ集合データの計算
     mandelbrot_data = create_mandelbrot_data()
     create_jpg(mandelbrot_data)
+    # 終了時間の記録と出力
+    end = time.perf_counter()
+    print('elapsed time: {:.8} sec'.format(end - start))
 
 if __name__ == "__main__":
     main()
