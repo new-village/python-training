@@ -20,7 +20,7 @@ def main():
         # 共有する変数'i'を作成
         counter = manager.Value('i', 0)
         # Lockオブジェクトを作成
-        lock = manager.Lock()
+        lock = manager.RLock()
         # マルチプロセス処理を実行
         with futures.ProcessPoolExecutor() as executor:
             future1 = executor.submit(count_up, 1, counter, lock)
