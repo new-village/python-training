@@ -10,41 +10,63 @@ https://docs.microsoft.com/en-us/azure/cosmos-db/sql-api-python-samples#item-exa
 """
 from azure.cosmos import CosmosClient, exceptions, PartitionKey
 import os
+import datetime
 
 import logging
 from logging.config import fileConfig
 
-def connection(_container, _partition):
-    # Create the client
-    url = os.environ['ACCOUNT_URI']
-    key = os.environ['ACCOUNT_KEY']
-    client = CosmosClient(url, credential=key)
+class cosmos():
+    def __init__(self, _container, _partition):
+        # Create the client
+        url = os.environ['ACCOUNT_URI']
+        key = os.environ['ACCOUNT_KEY']
+        client = CosmosClient(url, credential=key)
 
-    # Create or Get Database
-    try:
-        database = client.create_database(os.environ['COSMOS_DB'])
-    except exceptions.CosmosResourceExistsError:
-        database = client.get_database_client(os.environ['COSMOS_DB'])
+        # Create or Get Database
+        try:
+            self.database = client.create_database(os.environ['COSMOS_DB'])
+        except exceptions.CosmosResourceExistsError:
+            self.database = client.get_database_client(os.environ['COSMOS_DB'])
 
-    # Create or Get Container
-    try:
-        container = database.create_container(id=_container, partition_key=PartitionKey(path=_partition))
-    except exceptions.CosmosResourceExistsError:
-        container = database.get_container_client(_container)
-    except exceptions.CosmosHttpResponseError:
-        raise    
+        # Create or Get Container
+        try:
+            self.container = self.database.create_container(id=_container, partition_key=PartitionKey(path=_partition))
+        except exceptions.CosmosResourceExistsError:
+            self.container = self.database.get_container_client(_container)
+        except exceptions.CosmosHttpResponseError:
+            raise
 
-    return container
+    def count(self):
+        count = list(self.container.read_all_items()).__len__()
+        return count
+
+    def select_all(self):
+        items = list(self.container.read_all_items())
+        return items
+    
+    def upsert(self, item):
+        res = self.container.upsert_item(item)
+        return res
+
 
 def main():
-    container = connection('items', '/_id')
-    # Get top 10 records
-    item_list = list(container.read_all_items(max_item_count=10))
+    items = cosmos('items', '/_id')
+
     # 件数の出力
-    print('Found {0} items'.format(item_list.__len__()))
-    # 取得したレコードのIDフィールドを出力
-    for doc in item_list:
-        print('Item Id: {0}'.format(doc.get('id')))
+    print('Found {0} items'.format(items.count()))
+    
+    # 取得したレコードのIDフィールドを出力   
+    for doc in items.select_all():
+        print(doc)
+
+    # 新規レコードの追加
+    now = datetime.datetime.now()
+    rec = {
+        'id': str(int(items.select_all()[items.count() - 1].get('id')) + 1),
+        'create_dttm': now.strftime('%Y/%m/%dT%H:%M:%S.%fZ')
+        }
+    items.upsert(rec)
+
 
 if __name__ == "__main__":
     # load logging configuration
