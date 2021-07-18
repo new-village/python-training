@@ -1,4 +1,5 @@
 {
+    "id": {"type":"str", "function": "set_hash"},
     "Type": {"type":"str"},
     "Prefecture": {"type":"str"},
     "Municipality": {"type":"str"},

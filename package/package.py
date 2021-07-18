@@ -10,7 +10,7 @@ from logging.config import fileConfig
 from concurrent import futures
 
 
-def distributor(_data):
+def sanitization(_data):
     result = []
     with futures.ProcessPoolExecutor(max_workers=8) as executor:
         for rec in _data:
@@ -30,6 +30,8 @@ if __name__ == "__main__":
     res = requests.get(url)
     res = json.loads(res.content.decode())
 
-    # for word in list5.py:
-    data = distributor(res['data'])
+    # 取得データのsanitization（加工）
+    data = sanitization(res['data'])
+
+    # データベースにデータ投入
     print(data)
