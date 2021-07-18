@@ -1,0 +1,12 @@
+{
+    "Type": {"type":"str"},
+    "Prefecture": {"type":"str"},
+    "Municipality": {"type":"str"},
+    "DistrictName": {"type":"str"},
+    "TradePrice": {"type":"int"},
+    "Area": {"type":"int"},
+    "BuildingYear": {"type":"int", "function": "JpnYear_to_ad"},
+    "Structure": {"type":"str", "function": "jp_normalize"},
+    "Purpose": {"type":"str"},
+    "Period": {"type":"str", "function": "jp_normalize"}
+}
