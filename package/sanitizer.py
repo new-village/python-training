@@ -19,6 +19,7 @@ def execute(_record):
                 # 事前データ加工が必要なフィールド
                 process = v.get('function') + '("' + value + '")'
                 value = eval(process)
+        
             else:
                 # 新規フィールドの追加
                 process = v.get('function') + '("' + str(_record) + '")'
@@ -75,7 +76,12 @@ def JpnYear_to_ad(value):
     return year
 
 def jp_normalize(value):
-    normalized = jaconv.z2h(value, kana=False, ascii=True, digit=True)
+    fmt = re.compile(r'[０-９Ａ-Ｚａ-ｚ]+')
+    if len(fmt.findall(value)) == 1:
+        normalized = jaconv.z2h(value, kana=False, ascii=True, digit=True)
+    else:
+        normalized = ""
+
     return normalized
 
 def set_hash(values):

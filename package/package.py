@@ -6,6 +6,8 @@ import json
 import requests
 import logging
 import sanitizer
+from dataloader import dataloader
+
 from logging.config import fileConfig
 from concurrent import futures
 
@@ -26,7 +28,7 @@ if __name__ == "__main__":
     logger = logging.getLogger(__name__)
 
     # requests.get でデータ取得
-    url = 'https://www.land.mlit.go.jp/webland/api/TradeListSearch?from=20201&to=20201&city=13106'
+    url = 'https://www.land.mlit.go.jp/webland/api/TradeListSearch?from=20181&to=20204&city=13106'
     res = requests.get(url)
     res = json.loads(res.content.decode())
 
@@ -34,4 +36,8 @@ if __name__ == "__main__":
     data = sanitization(res['data'])
 
     # データベースにデータ投入
-    print(data)
+    dl = dataloader()
+    dl.upsert(data)
+
+    # 結果を出力
+    print('レコード件数： ' + str(dl.count()) + '件')
