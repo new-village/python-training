@@ -13,7 +13,8 @@ import os
 import datetime
 
 import logging
-from logging.config import fileConfig
+import logging.config
+
 
 class cosmos():
     def __init__(self, _container, _partition):
@@ -43,7 +44,7 @@ class cosmos():
     def select_all(self):
         items = list(self.container.read_all_items())
         return items
-    
+
     def upsert(self, item):
         res = self.container.upsert_item(item)
         return res
@@ -54,8 +55,8 @@ def main():
 
     # 件数の出力
     print('Found {0} items'.format(items.count()))
-    
-    # 取得したレコードのIDフィールドを出力   
+
+    # 取得したレコードのIDフィールドを出力
     for doc in items.select_all():
         print(doc)
 
@@ -64,14 +65,13 @@ def main():
     rec = {
         'id': str(int(items.select_all()[items.count() - 1].get('id')) + 1),
         'create_dttm': now.strftime('%Y/%m/%dT%H:%M:%S.%fZ')
-        }
+    }
     items.upsert(rec)
 
 
 if __name__ == "__main__":
     # load logging configuration
-    cd = os.path.dirname(os.path.abspath(__file__))
-    logging.config.fileConfig(cd + '/config/logging.ini')
+    logging.config.fileConfig('./config/logging.ini')
     logger = logging.getLogger(__name__)
 
     # call main function
