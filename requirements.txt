@@ -3,3 +3,4 @@ matplotlib
 azure-cosmos
 requests
 jaconv
+pandas
