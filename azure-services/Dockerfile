@@ -1,16 +1,22 @@
 FROM python:3.8-slim-buster
 
+# Copy & Change directory
+COPY . /app/
 WORKDIR /app
 
 # library update
 RUN apt-get update
 
 # pip execution
-COPY ../requirements.txt requirements.txt
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
-RUN pip3 install azure-cosmos
-RUN pip3 install pandas
+RUN pip install azure-cosmos
+RUN pip install pandas
 
-COPY . .
-CMD ["python3", "cosmos-db.py"]
+# Set Environment Variables
+ARG ACCOUNT_URI
+ENV ACCOUNT_URI=${ACCOUNT_URI}
+ARG ACCOUNT_KEY
+ENV ACCOUNT_KEY=${ACCOUNT_KEY}
+
+CMD ["python", "cosmos-db.py"]
