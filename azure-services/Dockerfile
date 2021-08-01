@@ -13,10 +13,4 @@ RUN pip install --upgrade setuptools
 RUN pip install azure-cosmos
 RUN pip install pandas
 
-# Set Environment Variables
-ARG ACCOUNT_URI
-ENV ACCOUNT_URI=${ACCOUNT_URI}
-ARG ACCOUNT_KEY
-ENV ACCOUNT_KEY=${ACCOUNT_KEY}
-
 CMD ["python", "cosmos-db.py"]
