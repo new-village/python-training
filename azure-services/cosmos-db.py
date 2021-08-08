@@ -30,18 +30,18 @@ class cosmos():
         # Create or Get Database
         try:
             self.database = client.create_database('cosmos_db')
-            logger.debug('Create cosmos_db database')
+            logger.info('Create cosmos_db database')
         except exceptions.CosmosResourceExistsError:
             self.database = client.get_database_client('cosmos_db')
-            logger.debug('Connect database to cosmos_db')
+            logger.info('Connect database to cosmos_db')
 
         # Create or Get Container
         try:
             self.container = self.database.create_container(id='sample', partition_key=PartitionKey(path='/_id'))
-            logger.debug('Create sample table')
+            logger.info('Create sample table')
         except exceptions.CosmosResourceExistsError:
             self.container = self.database.get_container_client('sample')
-            logger.debug('Connect table to sample')
+            logger.info('Connect table to sample')
         except exceptions.CosmosHttpResponseError as e:
             logger.error('Connection error')
             logger.error('Trace', exc_info=True)
@@ -73,10 +73,10 @@ class cosmos():
         try:
             if isinstance(items, dict):
                 res = [self.container.upsert_item(items)]
-                logger.debug('Upsert {0} items'.format(len(res)))
+                logger.info('Upsert {0} items'.format(len(res)))
             elif isinstance(items, list):
                 res = [self.container.upsert_item(i) for i in items]
-                logger.debug('Upsert {0} items'.format(len(res)))
+                logger.info('Upsert {0} items'.format(len(res)))
         except Exception as e:
             logger.error('There is data integrity issue')
             logger.error('Trace', exc_info=True)
