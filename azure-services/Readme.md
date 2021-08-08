@@ -32,12 +32,20 @@ $ source local.sh
 if your execution is finished successful, you can see new records in cosmos-db.
 ```
 $ cd azure-services
-$ source local.sh
 $ docker build -t batch .
-$ docker run -e ACCOUNT_URI -e ACCOUNT_KEY -it -rm batch
+$ docker run --rm -e ACCOUNT_URI -e ACCOUNT_KEY -it batch
 ```
 
+3. Push Image to Azure Container Registry
+You have to change {xxx} to your environment.
+```
+$ docker login -u {USERNAME} -p {PASSWORD} {REGISTRY}.azurecr.io
+$ docker tag batch {REGISTRY}.azurecr.io/batch
+$ docker push {REGISTRY}.azurecr.io/batch
+```
 
+4. Launch Container by Azure Container Instance
+Don't fogot to set ACCOUNT_URI/ACCOUNT_KEY environment variables in launch wizard.
 
 ## Reference
 [Reference (Japanese)](https://tech-lab.sios.jp/archives/19859)
