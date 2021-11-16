@@ -22,3 +22,8 @@ $ vim init.sh
 $ chmod +x init.sh
 $ source init.sh
 ```
+## Trouble Shooting
+If you face `ERROR: Can not perform a '--user' install. User site-packages are not visible in this virtualenv.` error in pip command, you should set below config.
+```
+$ export PIP_USER=false
+```
