@@ -4,3 +4,4 @@ azure-cosmos
 requests
 jaconv
 pandas
+flask-restful
