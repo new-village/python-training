@@ -1,10 +1,11 @@
-# Backend
-This is a REST API back-end application executed on Azure Container Instance.  
+# Rest API
+This is a sample REST API back-end application executed on Azure Container Instance.  
   
-## Execute application on local
+## How to use
+#### Execute application on local
 1. Set environment variables  
 ```bash:
-$ cd backend
+$ cd rest_api
 $ cp init.sh local.sh
 $ vim local.sh
 $ source local.sh
@@ -15,13 +16,13 @@ $ source local.sh
 $ pip install --upgrade pip
 $ pip install --upgrade setuptools
 $ pip install -r requirements.txt
-$ python cosmos-db.py
+$ flask run
 ```
   
-## Execute application on Azure Container Registry
+#### Execute application on Azure Container Registry
 1. Set environment variables  
 ```bash:
-$ cd backend
+$ cd rest_api
 $ cp init.sh local.sh
 $ vim local.sh
 $ source local.sh
@@ -30,7 +31,7 @@ $ source local.sh
 2. Build Docker image & test run on local docker environment  
 if your execution is finished successful, you can see new records in cosmos-db.
 ```
-$ cd backend
+$ cd rest_api
 $ docker build -t batch .
 $ docker run --rm -e ACCOUNT_URI -e ACCOUNT_KEY -it batch
 ```
@@ -46,6 +47,9 @@ $ docker push {REGISTRY}.azurecr.io/batch
 4. Launch Container by Azure Container Instance
 Don't fogot to set ACCOUNT_URI/ACCOUNT_KEY environment variables in launch wizard.
   
-## Memo  
-* GET request with YYYYMMDD -> return data
-* POST Request with {"term": "day", "date": "YYYYMMDD"} -> Collect data -> Insert Data (async)   
+#### Call API
+To call the REST API by CURL, execute below command:
+```
+$ curl http://127.0.0.1:5000/api/13106/2018
+$ curl http://127.0.0.1:5000/api/13106/2018 -X POST
+```
