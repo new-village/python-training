@@ -1,0 +1,7 @@
+tasks:
+  - init: python3 -m venv .venv
+  - init: source .venv/bin/activate
+  - init: export PIP_USER=false
+  - init: pip install -U pip
+  - init: pip install -U setuptools
+  - init: pip install -r requirements.txt
