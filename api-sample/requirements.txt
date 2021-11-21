@@ -1,3 +1,5 @@
 azure-cosmos
 fastapi
+jaconv
+requests
 uvicorn[standard]

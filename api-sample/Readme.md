@@ -3,7 +3,7 @@ This is a sample REST API back-end application executed on Azure Container Insta
   
 ## How to use
 #### Execute application on local
-1. Set environment variables  
+1. Set environment variables by local.sh
 ```bash:
 $ cd rest_api
 $ cp init.sh local.sh
@@ -52,6 +52,6 @@ Don't fogot to set ACCOUNT_URI/ACCOUNT_KEY environment variables in launch wizar
 #### Call API
 To call the REST API by CURL, execute below command:
 ```
+$ curl http://127.0.0.1:5000/
 $ curl http://127.0.0.1:5000/api/13106/2018
-$ curl http://127.0.0.1:5000/api/13106/2018 -X POST
 ```
