@@ -13,10 +13,12 @@ $ source local.sh
   
 2. Run Python script  
 ```bash:
+$ python -m venv .venv
+$ source .venv/bin/activate
 $ pip install --upgrade pip
 $ pip install --upgrade setuptools
 $ pip install -r requirements.txt
-$ flask run
+$ python app.py
 ```
   
 #### Execute application on Azure Container Registry

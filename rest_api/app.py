@@ -1,26 +1,24 @@
 """ app.py
 """
-import json
+import uvicorn
+from fastapi import FastAPI
+from pydantic import BaseModel
 
-import requests
-from flask import Flask, Blueprint
+app = FastAPI()
 
-
-def launch_app():
-    app = Flask(__name__)
-    app.config["JSON_AS_ASCII"] = False
-
-    # Load Views
-    from views import blueprints
-    for bp in blueprints:
-        app.register_blueprint(bp)
-
-    return app
+class Sentence(BaseModel):
+    text: str
 
 
-app = launch_app()
-api = Blueprint("api", __name__, url_prefix="/estate")
+@app.get('/')
+def search_trades():
+    return {'details': 'This site is api of real estate collection based on mlti.'}
+
+
+@app.get('/{city_id}/{year}')
+def get_estate_trades(city_id: str, year: str):
+    return {'city_id': city_id, 'year': year}
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    uvicorn.run(app)

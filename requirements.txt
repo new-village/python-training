@@ -4,5 +4,5 @@ azure-cosmos
 requests
 jaconv
 pandas
-flask
-flask[async]
+fastapi
+uvicorn[standard]
