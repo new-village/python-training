@@ -1,7 +1,8 @@
 tasks:
-  - init: python3 -m venv .venv
-  - init: source .venv/bin/activate
-  - init: export PIP_USER=false
-  - init: pip install -U pip
-  - init: pip install -U setuptools
-  - init: pip install -r requirements.txt
+  - name: Create Environment
+    init: python3 -m venv .venv
+      source .venv/bin/activate
+      export PIP_USER=false
+      pip install -U pip
+      pip install -U setuptools
+      pip install -r requirements.txt
