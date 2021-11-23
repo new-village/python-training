@@ -5,7 +5,7 @@ This is a sample REST API back-end application executed on Azure Container Insta
 #### Execute application on local
 1. Set environment variables by local.sh
 ```bash:
-$ cd rest_api
+$ cd fastapi-sample
 $ cp init.sh local.sh
 $ vim local.sh
 $ source local.sh
@@ -24,7 +24,7 @@ $ python app.py
 #### Execute application on Azure Container Registry
 1. Set environment variables  
 ```bash:
-$ cd rest_api
+$ cd fastapi-sample
 $ cp init.sh local.sh
 $ vim local.sh
 $ source local.sh
@@ -33,7 +33,7 @@ $ source local.sh
 2. Build Docker image & test run on local docker environment  
 if your execution is finished successful, you can see new records in cosmos-db.
 ```
-$ cd rest_api
+$ cd fastapi-sample
 $ docker build -t batch .
 $ docker run --rm -e ACCOUNT_URI -e ACCOUNT_KEY -it batch
 ```
