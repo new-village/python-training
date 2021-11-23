@@ -34,20 +34,26 @@ $ source local.sh
 if your execution is finished successful, you can see new records in cosmos-db.
 ```
 $ cd fastapi-sample
-$ docker build -t batch .
-$ docker run --rm -e ACCOUNT_URI -e ACCOUNT_KEY -it batch
+$ docker build -t fastapi-sample .
+$ docker run --rm -e ${ACCOUNT_URI} -e ${ACCOUNT_KEY} -it fastapi-sample
 ```
 
 3. Push Image to Azure Container Registry
-You have to change {xxx} to your environment.
+You can see pushed contaier image on Azure Container Registry > Repository after below commands.
 ```
-$ docker login -u {USERNAME} -p {PASSWORD} {REGISTRY}.azurecr.io
-$ docker tag batch {REGISTRY}.azurecr.io/batch
-$ docker push {REGISTRY}.azurecr.io/batch
+$ docker login -u ${USERNAME} -p ${PASSWORD} ${REGISTRY}.azurecr.io
+$ docker tag fastapi-sample ${REGISTRY}.azurecr.io/fastapi-sample
+$ docker push ${REGISTRY}.azurecr.io/fastapi-sample
 ```
 
-4. Launch Container by Azure Container Instance
-Don't fogot to set ACCOUNT_URI/ACCOUNT_KEY environment variables in launch wizard.
+4. Deploy Web Application
+Select Repository > fastapi-sample > latest and select `deploy webapps`  
+You can see deployed application on `App Service` page.
+
+5. Set Environment Variables
+Select `App Service` > Configuration > New Application Setting.  
+Then you have to set ACCOUNT_URI/ACCOUNT_KEY environment variables and Save configuration.
+  
   
 #### Call API
 To call the REST API by CURL, execute below command:
