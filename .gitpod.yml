@@ -1,6 +1,7 @@
 tasks:
   - name: Create Environment
-    init: python3 -m venv .venv
+    init: |
+      python3 -m venv .venv
       source .venv/bin/activate
       export PIP_USER=false
       pip install -U pip
