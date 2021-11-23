@@ -52,6 +52,6 @@ Don't fogot to set ACCOUNT_URI/ACCOUNT_KEY environment variables in launch wizar
 #### Call API
 To call the REST API by CURL, execute below command:
 ```
-$ curl http://127.0.0.1:5000/
-$ curl http://127.0.0.1:5000/api/13106/2018
+$ curl http://127.0.0.1:8000/
+$ curl http://127.0.0.1:8000/api/13106/2018
 ```
