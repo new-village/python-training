@@ -1,22 +1,30 @@
 """ app.py
 """
-import uvicorn
 import logging
 from concurrent import futures
-from fastapi import FastAPI
-from pydantic import BaseModel
-from internal import collection, execute, connection
+from datetime import datetime
+
+import uvicorn
+from fastapi import BackgroundTasks, FastAPI
+
+from internal import collection, connection, execute
 
 app = FastAPI()
 logger = logging.getLogger('uvicorn')
 
+
 @app.get('/')
 def search_trades():
-    return {'details': 'This site is api of real estate collection based on mlti.'}
+    return {'message': 'This site is api of real estate collection based on mlti.'}
 
 
 @app.get('/{city_id}/{year}')
-def get_estate_trades(city_id: str, year: str):
+async def async_task(city_id: str, year: str, background_tasks: BackgroundTasks):
+    background_tasks.add_task(collect_data, city_id, year)
+    return {'message': f'The request has been accepted. Accepted Time: {datetime.utcnow()}'}
+
+
+def collect_data(city_id: str, year: str):
     # requests.get でデータ取得
     url = 'https://www.land.mlit.go.jp/webland/api/TradeListSearch?from=' + year + '1&to=' + year + '4&city=' + city_id
     res = collection(url).to_dict()
@@ -33,7 +41,7 @@ def get_estate_trades(city_id: str, year: str):
     conn = connection()
     conn.upsert(data)
 
-    return data
+    logger.info(f'The request has been successfully completed. {datetime.utcnow()}')
 
 
 def sanitization(_data):

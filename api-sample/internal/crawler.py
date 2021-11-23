@@ -8,6 +8,7 @@ import logging
 
 logger = logging.getLogger('uvicorn')
 
+
 class collection():
     def __init__(self, url):
         try:
