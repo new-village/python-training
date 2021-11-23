@@ -7,3 +7,5 @@ tasks:
       pip install -U pip
       pip install -U setuptools
       pip install -r requirements.txt
+ports:
+  - port: 80
