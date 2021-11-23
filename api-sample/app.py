@@ -14,11 +14,18 @@ logger = logging.getLogger('uvicorn')
 
 
 @app.get('/')
-def search_trades():
-    return {'message': 'This site is api of real estate collection based on mlti.'}
+def list_trades():
+    data = connection().select_all()
+    return data
 
 
-@app.get('/{city_id}/{year}')
+@app.get('/count')
+def count_trades():
+    cnt = connection().count()
+    return {'count': cnt}
+
+
+@ app.get('/{city_id}/{year}')
 async def async_task(city_id: str, year: str, background_tasks: BackgroundTasks):
     background_tasks.add_task(collect_data, city_id, year)
     return {'message': f'The request has been accepted. Accepted Time: {datetime.utcnow()}'}
