@@ -25,7 +25,7 @@ def count_trades():
     return {'count': cnt}
 
 
-@ app.get('/{city_id}/{year}')
+@app.get('/{city_id}/{year}')
 async def async_task(city_id: str, year: str, background_tasks: BackgroundTasks):
     background_tasks.add_task(collect_data, city_id, year)
     return {'message': f'The request has been accepted. Accepted Time: {datetime.utcnow()}'}
