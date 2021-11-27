@@ -1,4 +1,4 @@
-""" main.py
+""" azure-blob-storage/main.py
 This scipt upload file to Azure blob storage.
 """
 import logging
