@@ -1,8 +1,0 @@
-numpy
-matplotlib
-azure-cosmos
-requests
-jaconv
-pandas
-fastapi
-uvicorn[standard]
