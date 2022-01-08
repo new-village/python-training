@@ -6,7 +6,6 @@ tasks:
       export PIP_USER=false
       pip install -U pip
       pip install -U setuptools
-      pip install -r requirements.txt
   - name: Create Environment
     command: |
       source .venv/bin/activate
