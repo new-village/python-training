@@ -7,6 +7,7 @@ This is the sample code of Unzip files.
 $ cd unzip-files
 $ pip install requests
 $ pip install pandas
+$ pip install lhafile
 ```
 
 2. Execute script
