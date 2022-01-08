@@ -1,16 +1,17 @@
-""" zipcode.py
-This script download postal code list of Tokyo from Japan Post
+""" unzip-files/zip.py
+Download & unzip files of japanese zipcode list from Japan Post Bank
+
 """
-import pandas as pd
 import logging
 import logging.config
-import requests
-
-from io import BytesIO
+from io import BytesIO, StringIO
 from zipfile import ZipFile
 
+import pandas as pd
+import requests
 
-class japanpost:
+
+class ZipCodeHandler:
     def __init__(self):
         self.ses = requests.Session()
         self.url = 'https://www.post.japanpost.jp/zipcode/dl/kogaki/zip/'
@@ -33,38 +34,51 @@ class japanpost:
             logger.error('Request to ' + url + ' has been failure: ' + str(res.status_code))
             raise SystemExit()
 
-        self.res = res.content
-        return self
+        return self._extract_csv(res.content)
 
-    @property
-    def dataframe(self):
+    def _extract_csv(self, content):
         # Unzip HTTP response file
-        zipfiles = ZipFile(BytesIO(self.res))
+        zipfiles = ZipFile(BytesIO(content))
 
         # Get file name
         fn = [f for f in zipfiles.namelist() if '.csv' in f.lower()]
         if len(fn) == 1:
+            logger.info('Try to unzip ' + fn[0])
             # Unzip file name from zip file
-            csv = zipfiles.open(fn[0])
-            # Read csv file to pandas dataframe
-            df = pd.read_csv(csv, encoding='shift-jis')
-            df.columns = ["gov_cd", "old_postal_cd", "postal_cd", "state_kana", "city_kana",
-                          "address", "state", "city", "address", "flg1", "flg2", "flg3", "flg4", "flg5", "flg6"]
-
-            logger.info('Try to convert ' + fn[0] + ' to Pandas Dataframe')
+            zip_obj = zipfiles.open(fn[0])
+            csv = zip_obj.read()
         else:
             # Unexpected zipffile structure error
             logger.error('Unexpected Zipfile Structure. There is no CSV or many CSVs.')
             raise SystemExit()
+
+        return csv.decode('shift-jis')
+
+    def to_dataframe(self, csv):
+        try:
+            # Read csv file to pandas dataframe
+            df = pd.read_csv(StringIO(csv), header=None)
+            df.columns = ["gov_cd", "old_postal_cd", "postal_cd", "state_kana", "city_kana",
+                          "address", "state", "city", "address", "flg1", "flg2", "flg3", "flg4", "flg5", "flg6"]
+            logger.info('Try to convert csv to dataframe: ' + str(df.shape))
+        except Exception as e:
+            # Exception error handling
+            logger.error('Unexpected error has been occuered.')
+            logger.error('Trace', exc_info=True)
+            raise SystemExit(e)
 
         return df
 
 
 if __name__ == "__main__":
     # Load logger config & Set Logger
-    logging.config.fileConfig('./config/logging.ini')
+    logging.basicConfig(level='INFO', format='%(asctime)s [%(levelname)s] %(message)s')
     logger = logging.getLogger()
 
-    # Download ZIP File Strings
-    df = japanpost().download('13TOKYO.ZIP').dataframe
-    print(df)
+    # Download zip file
+    handler = ZipCodeHandler()
+    csv = handler.download('13TOKYO.ZIP')
+
+    # Convert CSV to Dataframe with Header
+    df = handler.to_dataframe(csv)
+    print(df.head())
