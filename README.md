@@ -7,6 +7,7 @@ This is my python training repository. The project stored minimum application fo
 | azure-blob-storage       | The Application manipulate files or data with Azure BLOB Storage                   |
 | azure-container-registry | The Application makes python docker container and push to Azure Container Registry |
 | azure-cosmos-db          | Insert records to Cosmos DB and get all records from DB                            |
+| azure-functions          | Print strings to log file each hour                            |
 | fastapi-sample           | Data Collection and Generate REST API Service by FastAPI framework           |
 | import-understanding     | Understanding for python import mechanism.                                   |
 | requests                 | Understanding for requests library and stream unzip.                         |
