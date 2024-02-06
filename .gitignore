@@ -142,3 +142,6 @@ __azurite_db*__.json
 
 # Shell
 local.sh
+
+# Data
+*.parquet

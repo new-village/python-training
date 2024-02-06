@@ -11,6 +11,7 @@ This is my python training repository. The project stored minimum application fo
 | fastapi-sample           | Data Collection and Generate REST API Service by FastAPI framework           |
 | import-understanding     | Understanding for python import mechanism.                                   |
 | requests                 | Understanding for requests library and stream unzip.                         |
+| btc-transactions         | Retrieve BTC transaction data from AWS S3 using the AWS SDK.                        |
 
 
 ## Trouble Shooting
