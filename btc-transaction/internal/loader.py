@@ -2,9 +2,11 @@
 """
 import os
 import boto3
-import logging
+from logging import getLogger
 from botocore.config import Config
 from botocore import UNSIGNED
+
+logger = getLogger(__name__)
 
 class S3Blockchain:
     def __init__(self):
@@ -24,6 +26,6 @@ class S3Blockchain:
                 file_name = content['Key'].split('/')[-1]
                 os.makedirs(file_path, exist_ok=True)
                 self.s3.download_file(self.bucket_name, content['Key'], os.path.join(file_path, file_name))
-                logging.info(f'[SUCCESS] Downloaded {file_name} to {file_path}')
+                logger.info(f'[SUCCESS] Downloaded {file_name} to {file_path}')
         else:
-            logging.warning(f'[FAILURE] {prefix} is not Found')
+            logger.warning(f'[FAILURE] {prefix} is not Found')
