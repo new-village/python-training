@@ -1,10 +1,9 @@
-# Hello PySpark
+# BTC Transaction
 
-This is my first PySpark project. The project collect Blockchain data from AWS, then load data to spark.
+This is Bitcoin transaction data collection project. The project collect Blockchain data from AWS using AWS SDK.
 
 ## Learning Objectives
 
-* Understanding PySpark
 * Downloading Blockchain data from AWS
 
 ## Usage
