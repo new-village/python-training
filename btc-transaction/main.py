@@ -1,4 +1,4 @@
-""" app.py
+""" main.py
 """
 import sys
 import calendar
