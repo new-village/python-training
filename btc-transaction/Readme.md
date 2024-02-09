@@ -9,16 +9,16 @@ This is Bitcoin transaction data collection project. The project collect Blockch
 ## Usage
 
 ```
-cd ~/python-training/hello-pyspark
+cd ~/python-training/btc-transaction
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requrements.txt
-python app.py
+python main.py
 ```
 
 if you would like to get specific year and month data, you should add argument `YYYYMM` to app.py.
 ```
-python app.py 200901
+python main.py 200901
 ```
 
 ## Reference
