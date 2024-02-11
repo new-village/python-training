@@ -16,10 +16,16 @@ pip install -r requrements.txt
 python main.py
 ```
 
-if you would like to get specific year and month data, you should add argument `YYYYMM` to app.py.
+if you would like to get specific month, you should add argument `YYYYMM` to app.py.
 ```
 python main.py 200901
 ```
 
+if you would like to get specific day, you should add argument `YYYYMMDD` to app.py.
+```
+python main.py 20240101
+```
+
 ## Reference
 * [Downloading files - Boto3 1.34.34 documentation (amazonaws.com)](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-example-download-file.html)
+* [AWS Public Blockchain Data](https://registry.opendata.aws/aws-public-blockchain/)
